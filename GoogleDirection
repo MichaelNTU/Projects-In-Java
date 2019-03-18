@@ -1,0 +1,51 @@
+package myRESTws;
+import java.io.*;
+import java.net.*;
+import java.util.List;
+import reservflight.*;
+
+/**
+ *
+ * @author mikeo
+ */
+public class GoodleDirection {
+     public static void main(String[] args) {
+         //TravelAgency bookflight = new TravelAgency();
+        // GoodleDirection dd = new GoodleDirection();
+         String origincity;
+         String destinationcity;
+        // List<FlightType>drivedirect(String DestinationCity,String OriginCity){ 
+            // this.destinationcity = DestinationCity;
+           //  this.origincity = OriginCity;
+         List<FlightType>listDriveD = null;
+         
+         
+ try {
+     URL url = new URL ("https://maps.googleapis.com/maps/api/directions/json?origin=Nottingham&destination=London&key=AIzaSyA2RHd15lKbv9-FGxmCShWr-fAtYll3wd4");
+// URL url = new URL ("https://maps.googleapis.com/maps/api/directions/json?origin"+"="+OriginCity +"&"+"destination"+"="+DestinationCity +"&key=AIzaSyA2RHd15lKbv9-FGxmCShWr-fAtYll3wd4");
+ HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+ // Check for successful response code or throw error
+ if (conn.getResponseCode() != 200) {
+ throw new IOException(conn.getResponseMessage());
+ }
+ BufferedReader ins = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+ String inString;
+ StringBuilder sb = new StringBuilder();
+ while ((inString = ins.readLine()) != null) {
+ sb.append(inString + "/distance" + "\n");
+ }
+ System.out.println(sb.toString());
+ ins.close();
+ }
+ catch (MalformedURLException me) {
+System.out.println("MalformedURLException: " + me); 
+ }
+ catch (IOException ioe) {
+ System.out.println("IOException: " + ioe); 
+ }
+// return listDriveD;
+ //return dd.driveDirect(DestinationCity, OriginCity);
+ //return this.driveDirect(DestinationCity, OriginCity);
+ //}
+     }
+}
