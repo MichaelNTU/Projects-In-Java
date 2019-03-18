@@ -1,0 +1,53 @@
+package myRESTws;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ *
+ * @author mikeo
+ */
+@XmlRootElement
+public class DriveDirection{
+    private String origin;
+    private String destination;
+    
+    public DriveDirection(){
+        
+    }
+    
+    public DriveDirection(String origin,String destination){
+        this.destination = destination;
+        this.origin = origin;
+        try{
+    //URL url = new URL ("https://maps.googleapis.com/maps/api/directions/json?origin=Nottingham&destination=London&key=AIzaSyA2RHd15lKbv9-FGxmCShWr-fAtYll3wd4");
+ URL url = new URL ("https://maps.googleapis.com/maps/api/directions/xml?origin"+"="+origin+"&"+"destination"+"="+destination+"&key=AIzaSyA2RHd15lKbv9-FGxmCShWr-fAtYll3wd4");
+ HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+ // Check for successful response code or throw error
+ if (conn.getResponseCode() != 200) {
+ throw new IOException(conn.getResponseMessage());
+ }
+ BufferedReader ins = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+ String inString;
+ StringBuilder sb = new StringBuilder();
+ while ((inString = ins.readLine()) != null) {
+ sb.append(inString + "/distance" + "\n");
+ }
+ System.out.println(sb.toString());
+ ins.close();
+ }
+ catch (MalformedURLException me) {
+System.out.println("MalformedURLException: " + me); 
+ }
+ catch (IOException ioe) {
+ System.out.println("IOException: " + ioe); 
+ }
+    }
+  
+    
+}
