@@ -1,0 +1,112 @@
+package myRESTws;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import reservflight.*;
+
+
+/**
+ *
+ * @author mikeo
+ */
+public class Main {
+    public static void main(String[] args) {
+        
+        TravelAgency bookflight = new TravelAgency();
+        List<FlightType>myflight = bookflight.getFlights();
+       // XPathFactory factory = XPathFactory.newInstance();
+        //XPath xpath = factory.newXPath();
+       
+        FlightType flight = new FlightType();
+        flight.setAirline((String)"British Airways");
+        flight.setAvailableSeat((int)20);
+        flight.setAirportAddress((String)"Heathrow");
+        flight.setDestinationCity((String)"Edinburgh");
+        flight.setFare((float)456.90);
+        flight.setNumberOfConnection((int)2);
+        flight.setOriginCity((String)"London");
+        myflight.add(flight);
+        
+        flight = new FlightType();
+        flight.setAirline((String)"Austrian Airlines");
+        flight.setAvailableSeat((int)14);
+        flight.setAirportAddress((String)"Paris");
+        flight.setDestinationCity((String)" Marseille");
+        flight.setFare((float)120.45);
+        flight.setNumberOfConnection((int)0);
+        flight.setOriginCity((String)"Paris");
+        myflight.add(flight);
+        
+        flight = new FlightType();
+        flight.setAirline((String)"Air France KLM");
+        flight.setAvailableSeat((int)7);
+        flight.setAirportAddress((String)"Paris");
+        flight.setDestinationCity((String)"Nottingham");
+        flight.setFare((float)654.45);
+        flight.setNumberOfConnection((int)1);
+        flight.setOriginCity((String)"London");
+        myflight.add(flight);
+        
+        flight = new FlightType();
+        flight.setAirline((String)"Lufthansa");
+        flight.setAvailableSeat((int)22);
+        flight.setAirportAddress((String)"Flughafen");
+        flight.setDestinationCity((String)"berlin");
+        flight.setFare((float)356.90);
+        flight.setNumberOfConnection((int)0);
+        flight.setOriginCity((String)"Frankfurt");
+        myflight.add(flight);
+        
+        flight = new FlightType();
+        flight.setAirline((String)"Air Canada");
+        flight.setAvailableSeat((int)10);
+        flight.setAirportAddress((String)"Toronto");
+        flight.setDestinationCity((String)"Saint John Airport");
+        flight.setFare((float)678.40);
+        flight.setNumberOfConnection((int)2);
+        flight.setOriginCity((String)"Montreal");
+        myflight.add(flight);
+        
+        try {            
+            javax.xml.bind.JAXBContext jaxbCtx = javax.xml.bind.JAXBContext.newInstance(bookflight.getClass().getPackage().getName());
+            javax.xml.bind.Marshaller marshaller = jaxbCtx.createMarshaller();
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_ENCODING, "UTF-8"); //NOI18N
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            //marshaller.marshal(flight, System.out);
+            File xmlFile = new File("XMLflie.xml" );
+            marshaller.marshal( bookflight, xmlFile );
+//            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//            Document doc = dBuilder.parse(xmlFile);
+//            doc.getDocumentElement().normalize();
+//
+//            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+//            InputSource inputXml = new InputSource(new FileInputStream(xmlFile));
+//            NodeList nodes = (NodeList) xpath.evaluate("XPATH_EXPRESSION", inputXml, XPathConstants.NODESET);
+//            // marshaller.marshal(myflight, file);
+//            for (int i =0, n = nodes.getLength(); i<n ; i++){
+//            String nodeString = nodes.item(i).getTextContent();
+//            System.out.print(nodeString);
+//            System.out.print("\n");
+//            }
+            FlightType checkflight = new FlightType();
+            Iterator itr = myflight.iterator();
+            while(itr.hasNext()) {
+                checkflight = (FlightType) itr.next();
+                if(checkflight.getAvailableSeat()>10) {
+                    System.out.println(checkflight.getAirline() + " Fare is:   " + checkflight.getFare());
+                }
+            
+            }
+        } catch (javax.xml.bind.JAXBException ex) {
+            // XXXTODO Handle exception
+            java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
+        }
+        
+      
+       
+    }
+    
+}
