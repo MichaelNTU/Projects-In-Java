@@ -1,0 +1,75 @@
+package myRESTws;
+
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//import static java.lang.System.out;
+//import java.net.HttpURLConnection;
+//import java.net.MalformedURLException;
+//import java.net.URL;
+//import java.util.Iterator;
+import java.util.List;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PUT;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
+import reservflight.*;
+
+/**
+ * REST Web Service
+ *
+ * @author mikeo
+ */
+@Path("reservflight")
+@ApplicationPath("/flightrestful")
+public class FlightRESTful extends Application{
+
+    //@Context
+   // private UriInfo context;
+
+    /**
+     * Creates a new instance of FlightRESTful
+     */
+    public FlightRESTful() {
+    }
+
+    /**
+     * Retrieves representation of an instance of myRESTws.FlightRESTful
+     * @return an instance of java.lang.String
+     */
+   // TravelAgency bookflight = new TravelAgency();
+    @GET
+    @Path("/echo")
+    public Response getEchoMsg(@QueryParam("message")String msg){
+        return Response.ok("You message was: " + msg).build();
+        
+    
+    }
+    
+    @GET
+    @Path("/drived")
+    @Produces(MediaType.APPLICATION_XML)
+    public DriveDirection getDriveD(@QueryParam("Origin City")String origin,@QueryParam("Destination City")String destination){ 
+        //TODO return proper representation object
+        
+        
+       return new DriveDirection(origin,destination);
+    }
+
+    /**
+     * PUT method for updating or creating an instance of FlightRESTful
+     * @param content representation for the resource
+     */
+    @PUT
+    @Consumes(MediaType.APPLICATION_XML)
+    public void putXml(String content) {
+    }
+    }
