@@ -1,0 +1,20 @@
+package average;
+
+/**
+ *
+ * @author mikeo
+ */
+public class Average {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        int num1 = 10;
+        int num2 = 23;
+        System.out.println("The average is " +
+                           (num1+num2)/2.0);
+    }
+    
+}
